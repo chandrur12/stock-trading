@@ -1,4 +1,4 @@
-package com.sb.stock.trade.service;
+package com.sb.stock.trade.kafka.service;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

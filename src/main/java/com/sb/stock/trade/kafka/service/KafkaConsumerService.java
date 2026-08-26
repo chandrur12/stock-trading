@@ -1,4 +1,4 @@
-package com.sb.stock.trade.service;
+package com.sb.stock.trade.kafka.service;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
