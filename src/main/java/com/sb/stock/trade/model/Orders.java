@@ -2,7 +2,7 @@ package com.sb.stock.trade.model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "orders")
+public class Orders {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,49 +27,33 @@ public class Order {
 
 	@Column(name = "stock_id")
 	private BigInteger stockId;
-	
+
 	@Column(name = "trader_id")
-	public String traderId;
-	
+	private BigInteger traderId;
+
 	@Column(name = "ticker")
-	public String ticker;
-	
+	private String ticker;
+
 	@Column(name = "order_side")
-	public String orderSide;
-	
+	private String orderSide;
+
 	@Column(name = "order_type")
-	public String orderType;
-	
+	private String orderType;
+
 	@Column(name = "price")
-	public BigDecimal price;
-	
-	@Column(name = "original_quantity")	// null for market orders
-	public int originalQuantity;
-	
+	private BigDecimal price;
+
+	@Column(name = "original_quantity") // null for market orders
+	private BigInteger originalQuantity;
+
 	@Column(name = "remaining_quantity")
-	private int remainingQuantity;
+	private BigInteger remainingQuantity;
 
 	@Column(name = "timestamp")
-	public Instant timestamp;
-	
+	private LocalDateTime timestamp;
+
 	@Column(name = "status")
-	public String status;
-
-	public int getRemainingQuantity() {
-		return remainingQuantity;
-	}
-
-	public void reduceRemaining(int q) {
-		if (q < 0)
-			throw new IllegalArgumentException("q < 0");
-		if (q > remainingQuantity)
-			throw new IllegalArgumentException("reduce > remaining");
-		remainingQuantity -= q;
-	}
-
-	public boolean isFilled() {
-		return remainingQuantity == 0;
-	}
+	private String status;
 
 	@Override
 	public String toString() {

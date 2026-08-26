@@ -10,17 +10,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "stock")
 public class Stock {
 
-    @Id
+ 
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigInteger id;
 	
@@ -31,10 +35,10 @@ public class Stock {
 	private String companyName;
 
     @Column(name = "current_price")
-	private double currentPrice;
+	private BigDecimal currentPrice;
    
     @Column(name = "previous_close")
-	private double previousClose;
+	private BigDecimal previousClose;
   
     @Column(name = "market_cap")
 	public BigDecimal marketCap;
@@ -42,28 +46,7 @@ public class Stock {
     @Column(name = "shares")
 	public BigInteger shares;
 
-	// Constructor
-	public Stock(String symbol, String companyName, double initialPrice) {
-		this.symbol = symbol;
-		this.companyName = companyName;
-		this.currentPrice = initialPrice;
-		this.previousClose = initialPrice; // Baseline for calculating daily change
-	}
 
 	
-	// Methods
-	public void updatePrice(double newPrice) {
-		this.previousClose = this.currentPrice;
-		this.currentPrice = newPrice;
-	}
 
-	public double calculateDailyChange() {
-		return currentPrice - previousClose;
-	}
-
-	public double calculatePercentageChange() {
-		if (previousClose == 0)
-			return 0.0;
-		return ((currentPrice - previousClose) / previousClose) * 100;
-	}
 }

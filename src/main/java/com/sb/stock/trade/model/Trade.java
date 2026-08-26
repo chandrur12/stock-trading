@@ -2,7 +2,7 @@ package com.sb.stock.trade.model;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.Instant;
+import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -43,8 +43,7 @@ public class Trade {
     public  int quantity;
     
     @Column(name = "timestamp")
-    public  Instant timestamp;
-
+    public  Date timestamp;
 
 
     @Override
