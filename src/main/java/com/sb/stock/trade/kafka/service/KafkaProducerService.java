@@ -1,5 +1,8 @@
 package com.sb.stock.trade.kafka.service;
 
+
+
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -12,13 +15,12 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sb.stock.trade.service.impl.StockServiceImpl;
 import com.sb.stock.trade.view.PlaceOrderVo;
 
 @Service
 public class KafkaProducerService {
 
-	private static final Logger logger = LoggerFactory.getLogger(StockServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(KafkaProducerService.class);
 
 	private static final String TOPIC_1 = "my_topic_1";
 	private static final String TOPIC_2 = "my_topic_2";
@@ -56,7 +58,6 @@ public class KafkaProducerService {
 		System.out.println("Message sent : " + message);
 	}
 
-	
 	public void sendMessage(String topic, String message) {
 		/*
 		 * 
@@ -77,8 +78,7 @@ public class KafkaProducerService {
 		 * 
 		 * System.out.println("Message sent : " + message);
 		 */}
-	
-	
+
 	public void sendOrderMessage(PlaceOrderVo placeOrderVo) {
 
 		String jsonPayload = null;
@@ -91,8 +91,8 @@ public class KafkaProducerService {
 		CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(placeOrderVo.getTicker(),
 				jsonPayload);
 
-		
-    //    kafkaTemplate.send(placeOrderVo.getTicker(), placeOrderVo.getTicker(), placeOrderVo);
+		// kafkaTemplate.send(placeOrderVo.getTicker(), placeOrderVo.getTicker(),
+		// placeOrderVo);
 
 		future.whenComplete((result, exception) -> {
 			if (exception == null) {
@@ -104,9 +104,10 @@ public class KafkaProducerService {
 				int partition = result.getRecordMetadata().partition();
 
 				logger.info("metadata" + metadata);
-			
-				//System.out.println("metadata" + metadata);
-				//System.out.println("Message sent to topic " + metadata.topic() + " at offset " + metadata.offset() + " TimeStamp " + metadata.timestamp());
+
+				// System.out.println("metadata" + metadata);
+				// System.out.println("Message sent to topic " + metadata.topic() + " at offset
+				// " + metadata.offset() + " TimeStamp " + metadata.timestamp());
 
 				System.out.println("Message sent successfully! Offset: " + offset + ", Partition: " + partition);
 			} else {
@@ -116,4 +117,5 @@ public class KafkaProducerService {
 
 		System.out.println("Message sent : " + jsonPayload);
 	}
+
 }

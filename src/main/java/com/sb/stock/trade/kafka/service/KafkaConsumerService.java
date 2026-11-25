@@ -37,7 +37,7 @@ public class KafkaConsumerService {
 	private OrderService orderService;
 
 	@SuppressWarnings("unchecked")
-	@KafkaListener(topicPattern = ".*")
+	//@KafkaListener(topicPattern = "TickerOld.*")
 	public void reciveOrderMessage(List<ConsumerRecord<String, String>> records, Acknowledgment ack) {
 
 		logger.info("inside reciveOrderMessage");

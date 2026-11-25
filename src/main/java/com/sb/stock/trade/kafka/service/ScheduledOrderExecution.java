@@ -17,11 +17,9 @@ public class ScheduledOrderExecution {
 	@Autowired
 	OrderService orderService;
 
-	@Schedules({
-			// Runs every minute from 9:00 AM to 2:59 PM (9-14)
-			@Scheduled(cron = "0  0/2 9-14 * * MON-FRI"),
+//	@Schedules({ @Scheduled(cron = "0  0/2 9-14 * * MON-FRI"),
 			// Runs exactly at 3:00 PM
-			@Scheduled(cron = "0 0 15 * * MON-FRI") })
+	//		@Scheduled(cron = "0 0 15 * * MON-FRI") })
 	public void runWithCronExpression() {
 
 		log.info("Cron Task execution Starting at: {}", LocalDateTime.now());

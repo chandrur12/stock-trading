@@ -112,21 +112,19 @@ public class OrderServiceImpl implements OrderService {
 		if (idlist != null && idlist.size() > 0) {
 
 		} else {
-			
+
 			logger.info("Processinng Orders ");
 
 			// Map<String, Queue<Orders>> orderBook = new ConcurrentHashMap<>();
 			List<Orders> ordersList = ordersRepository.findOrdersByStatus("Completed");
 
-			
 			logger.info("Processinng Orders :" + ordersList.size());
 
 			// 2. Partition into Buy/Sell queues while preserving insertion order
 			Map<BigInteger, Map<Boolean, Queue<Orders>>> stockIdPartitionedMap = ordersList.stream()
 					.collect(Collectors.groupingBy(Orders::getStockId, // First level key mapper
-							Collectors.partitioningBy(order -> order.getOrderType().equals("BUY"), 
-									Collectors.toCollection(ConcurrentLinkedQueue::new) 
-							)));
+							Collectors.partitioningBy(order -> order.getOrderType().equals("BUY"),
+									Collectors.toCollection(ConcurrentLinkedQueue::new))));
 
 			for (Entry<BigInteger, Map<Boolean, Queue<Orders>>> entry : stockIdPartitionedMap.entrySet()) {
 
@@ -166,7 +164,7 @@ public class OrderServiceImpl implements OrderService {
 						}
 
 						// Update Sell Order
-						if (bestSell.getRemainingQuantity().equals(tradeQuantity) ) {
+						if (bestSell.getRemainingQuantity().equals(tradeQuantity)) {
 							bestSell.setStatus(Constants.CONSTANT_ORDER_STATUS_COMPLETED);
 							bestSell.setRemainingQuantity(new BigInteger("0"));
 
@@ -184,8 +182,8 @@ public class OrderServiceImpl implements OrderService {
 						break; // No more matches
 					}
 				}
-				
-			logger.info("Order size "+ btachOrders.size());
+
+				logger.info("Order size " + btachOrders.size());
 
 				List<Orders> idObjects = ordersRepository.saveAll(btachOrders);
 				List<BigInteger> ids = idObjects.stream().filter(o -> o.getId() != null).map(o -> o.getId())

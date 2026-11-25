@@ -1,7 +1,6 @@
 package com.sb.stock.trade.kafka.service.impl;
 
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
